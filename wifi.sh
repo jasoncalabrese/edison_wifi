@@ -32,7 +32,7 @@
 ##################################################################
 # Settings
 # Where and what you want to call the Lockfile
-lockfile='~/src/edison_wifi/WiFi_Check.pid'
+lockfile='/home/indy/edison_wifi/WiFi_Check.pid'
 # Which Interface do you want to check/fix
 wlan='wlan0'
 pingip=$1
@@ -65,8 +65,10 @@ echo "Performing Network check for $wlan"
 /bin/ping -c 2 -I $wlan $pingip > /dev/null 2> /dev/null
 if [ $? -ge 1 ] ; then
     echo "Network connection down! Attempting reconnection."
+    killall autossh
+    killall ssh
     /sbin/ifdown $wlan
-    /bin/sleep 5
+    /bin/sleep 15
     /sbin/ifup --force $wlan
 else
     echo "Network is Okay"
