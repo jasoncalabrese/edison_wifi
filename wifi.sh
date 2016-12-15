@@ -37,13 +37,6 @@ lockfile='/home/indy/edison_wifi/WiFi_Check.pid'
 wlan='wlan0'
 pingip=$1
 ##################################################################
-echo
-echo "Starting WiFi check for $wlan"
-date
-echo
-
-# Check to see if there is a lock file
-if [ -e $lockfile ]; then
     # A lockfile exists... Lets check to see if it is still valid
     pid=`cat $lockfile`
     if kill -0 &>1 > /dev/null $pid; then
@@ -61,7 +54,6 @@ fi
 echo $$ > $lockfile
 
 # We can perform check
-echo "Performing Network check for $wlan"
 /bin/ping -c 2 -I $wlan $pingip > /dev/null 2> /dev/null
 if [ $? -ge 1 ] ; then
     echo "Network connection down! Attempting reconnection."
