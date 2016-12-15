@@ -65,11 +65,12 @@ echo "Performing Network check for $wlan"
 /bin/ping -c 2 -I $wlan $pingip > /dev/null 2> /dev/null
 if [ $? -ge 1 ] ; then
     echo "Network connection down! Attempting reconnection."
-    killall autossh
-    killall ssh
     /sbin/ifdown $wlan
     /bin/sleep 15
     /sbin/ifup --force $wlan
+    /sbin/wpa_cli scan
+    killall autossh
+    killall ssh
 else
     echo "Network is Okay"
 fi
