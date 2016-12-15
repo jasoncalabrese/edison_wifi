@@ -75,10 +75,7 @@ else
     echo "Network is Okay"
 fi
 
-echo
-echo "Current Setting:"
 /sbin/ifconfig $wlan | grep "inet addr:"
-echo
 
 # Check is complete, Remove Lock file and exit
 #echo "process is complete, removing lockfile"
